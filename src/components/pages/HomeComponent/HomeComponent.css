@@ -1,0 +1,62 @@
+h3 
+{
+    margin: 10px 0 0;
+}
+
+ul 
+{
+    list-style-type: none;
+    padding: 0;
+}
+
+li 
+{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+a 
+{
+    color: #42b983;
+}
+
+.clientTableClass
+{
+    margin-top: 5%;
+}
+
+.tableDiv
+{
+    width: 80%;
+    margin: auto;
+}
+
+.searchBarClass
+{
+    margin-top: 3%;
+}  
+
+.addIconClass
+{
+    color: green;
+    cursor: pointer;
+    pointer-events: auto;
+
+}
+
+.iconColClass
+{
+    text-align: center;
+    cursor: pointer;
+}
+
+.deleteIconClass
+{
+    color: red;
+    cursor: pointer;
+}
+
+.editIconClass
+{
+    cursor: pointer;
+}
