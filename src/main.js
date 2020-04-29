@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import AppRoutes from '@/router.js'
+import store from './store/index'
 
 import "@/assets/styles/shards-dashboards.1.1.0.min.css"
 import '@/assets/styles/extras.1.1.0.min.css'
@@ -22,6 +23,7 @@ const router=new VueRouter({
 Vue.use(VueRouter);
 
 new Vue({
+  store,
   router:router,
   render: h => h(App),
 }).$mount('#app')

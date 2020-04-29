@@ -17,6 +17,10 @@ export default {
   },
   components: {
     PageHeader
+  },
+  created() { 
+     debugger // eslint-disable-line
+    console.log(this.$store.state.tokenModule.token);
   }
 };
 </script>

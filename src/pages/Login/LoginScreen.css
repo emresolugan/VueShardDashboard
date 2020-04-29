@@ -1,0 +1,41 @@
+  .mainCardClass
+  {
+      width: 80%;
+      margin: auto;
+      display: block;
+  }
+
+  .cardBodyClass
+  {
+    margin-top: 8%;
+  }
+
+  .inputGroup
+  {
+      margin-top: 12%;
+      width: 60%;
+      margin: auto;
+      display: block;
+  }
+
+  .inputClass
+  {
+      margin-top: 3%;
+  }
+
+  .btnClass
+  {
+      margin: auto;
+      display: block;
+      margin-top: 5%;
+      width: 15%;
+      margin-bottom: 15%;
+  }
+
+  .loginHeader
+  {
+      font-size: 35px;
+      color: black;
+      font-weight: 700;
+      text-align: center;
+  }

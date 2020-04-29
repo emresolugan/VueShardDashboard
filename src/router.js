@@ -1,5 +1,6 @@
 import BlogDashboard from '@/pages/BlogDashboard'
 import BlogPosts from '@/pages/BlogPosts'
+import LoginScreen from '@/pages/Login/LoginScreen'
 
 const routes = [
     {
@@ -20,6 +21,11 @@ const routes = [
         meta:{
             fsd:'dfs'
         }
+    },
+    {
+        path: '/login',
+        name: "login",
+        component: LoginScreen
     }
 ]
 
