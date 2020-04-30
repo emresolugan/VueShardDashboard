@@ -52,6 +52,6 @@ export default {
 </script>
 
 <style>
-  @import "LoginScreen.css";
+  @import "../../assets/styles/css/LoginScreen.css";
 </style>
 
