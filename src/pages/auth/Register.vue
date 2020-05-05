@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>
-            404 Error Page 
+            Register Screen 
         </p>
     </div>
 </template>
