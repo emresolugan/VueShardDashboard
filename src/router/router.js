@@ -19,11 +19,7 @@ const routes = [
     {
         path: '/post/:id',
         name: 'blog-posts',
-        component: BlogPosts,
-        props:true,
-        meta:{
-            fsd:'dfs'
-        }
+        component: BlogPosts
     },
 
     //Auth Section

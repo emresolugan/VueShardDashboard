@@ -26,6 +26,12 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
+                <a class="nav-link " href="/login">
+                  <i class="material-icons">person</i>
+                  <span>Sign In</span>
+                </a>
+              </li>
+              <li class="nav-item">
                 <router-link to="/blog" class="nav-link active">             
                   <i class="material-icons">edit</i>
                   <span>Blog Dashboard</span>
@@ -53,12 +59,6 @@
                 <a class="nav-link " href="tables.html">
                   <i class="material-icons">table_chart</i>
                   <span>Tables</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="user-profile-lite.html">
-                  <i class="material-icons">person</i>
-                  <span>User Profile</span>
                 </a>
               </li>
               <li class="nav-item">
