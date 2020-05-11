@@ -1,5 +1,6 @@
-import BlogDashboard from '@/pages/dashboard/BlogDashboard'
+import BlogDashboard from '@/pages/BlogDashboard/BlogDashboard'
 import BlogPosts from '@/pages/dashboard/BlogPosts'
+import AddBlog from '@/pages/AddBlog/AddBlog'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
 import Error_404 from '@/pages/errors/404'
@@ -20,6 +21,16 @@ const routes = [
         path: '/post/:id',
         name: 'blog-posts',
         component: BlogPosts
+    },
+    {
+        path: '/addblog',
+        name: 'add-blog',
+        component: AddBlog
+    },
+    {
+        path: '/addblog/:id',
+        name: 'add-blog',
+        component: AddBlog
     },
 
     //Auth Section
