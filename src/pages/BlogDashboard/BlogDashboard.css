@@ -1,0 +1,71 @@
+h3 
+{
+    margin: 10px 0 0;
+}
+
+ul 
+{
+    list-style-type: none;
+    padding: 0;
+}
+
+li 
+{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+a 
+{
+    color: #42b983;
+}
+
+.createpdfBtn
+{
+    margin-top: -7%;
+    float: right;
+    margin-right: 10%;
+}
+
+.pdfBtn
+{
+    margin-top: -7%;
+    float: right;
+}
+
+.clientTableClass
+{
+    margin-top: 5%;
+}
+
+.tableDiv
+{
+    width: 100%;
+    margin: auto;
+    margin-top: 2%;
+}
+
+.addIconClass
+{
+    color: green;
+    cursor: pointer;
+    pointer-events: auto;
+
+}
+
+.iconColClass
+{
+    text-align: center;
+    cursor: pointer;
+}
+
+.deleteIconClass
+{
+    color: red;
+    cursor: pointer;
+}
+
+.editIconClass
+{
+    cursor: pointer;
+}

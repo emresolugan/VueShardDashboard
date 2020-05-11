@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { Post } from '../../services/apicall';
 
 export default {
   name: 'LoginScreen',
@@ -31,18 +30,22 @@ export default {
 
   methods: {
     login: function () {
-      debugger // eslint-disable-line
-
-      Post("http://localhost:5000/api/Login", { username: this.username, password: this.password })
-      .then((response) => response.json())
+ 
+      let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+      let _data = {
+        method: 'POST',
+        body: JSON.stringify({ Username: this.username, Password: this.password }),
+        headers: headers
+      } 
+      fetch("http://localhost:5000/api/Login", _data)
+      .then(response => response.json())
       .then(response => {
-
-        debugger // eslint-disable-line
-        console.log(response);
-
-        this.$store.dispatch('tokenModule/setToken', response.token);
-        console.log(this.$store);
-
+          debugger // eslint-disable-line
+          console.log(response);
+          localStorage.setItem("accesstoken", response.accessToken);
+          localStorage.setItem("refreshtoken", response.refreshToken);
+          this.$store.dispatch('tokenModule/setToken', response.accessToken);
+          console.log(this.$store);
       }).catch((error) => console.error(error)) 
 
     }
