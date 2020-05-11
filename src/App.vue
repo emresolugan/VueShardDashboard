@@ -1,22 +1,20 @@
 <template>
-    <DefaultLayout>
-       <router-view></router-view>
-    </DefaultLayout>
+  <DefaultLayout>
+    <router-view></router-view>
+  </DefaultLayout>
 </template>
 
 <script>
-import DefaultLayout from '@/layouts/Default'
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     DefaultLayout
   },
-  data:function(){
-return {
-  todos:['O','Bu','Şu']
-}
+  data: {
+    
   }
-}
+};
 </script>
 
