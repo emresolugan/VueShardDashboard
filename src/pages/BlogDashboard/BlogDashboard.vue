@@ -71,12 +71,12 @@
     <div class="card" v-if="firstTableShowing">
       <div class="card-body" style="padding-bottom: 0;">
         <div v-if="pageCount < 7" class="pagingArea">
-          <p class="pagingNumbers" v-on:click="goBeforePage()"><</p>
+          <p class="pagingNumbers" v-on:click="goPreviousPage()"><</p>
           <p class="pagingNumbers" v-on:click="goSelectedPage(index)" v-for="index in pageCount" :key="index">{{ index }}</p>
           <p class="pagingNumbers" v-on:click="goNextPage()">></p>
         </div>
         <div v-if="pageCount >= 7" class="pagingArea">
-          <p class="pagingNumbers" v-on:click="goBeforePage()"><</p>
+          <p class="pagingNumbers" v-on:click="goPreviousPage()"><</p>
           <p class="pagingNumbers" v-on:click="goSelectedPage(1)">1</p>
           <p class="pagingNumbers" v-on:click="goSelectedPage(2)">2</p>
           <p class="pagingNumbers">...</p>
@@ -234,7 +234,7 @@ export default {
       }
     },
 
-    goBeforePage: function () {
+    goPreviousPage: function () {
       if(this.pageNum >= 1)
       {
         this.consumerList = [];
