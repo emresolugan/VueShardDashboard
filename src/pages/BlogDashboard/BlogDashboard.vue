@@ -17,45 +17,88 @@
             aria-label="SearchBar"
           />
         </div>
-        <table class="table table-striped table-bordered clientTableClass" id="pdfScreen">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Surname</th>
-              <th scope="col">MobilePhone</th>
-              <th scope="col">IP</th>
-              <th scope="col">MAC</th>
-              <th scope="col" colspan="2" data-html2canvas-ignore="true" class="iconColClass">
-                <em class="fa fa-plus-circle fa-2x addIconClass" v-on:click="routeFunc('/addblog')"></em>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in consumerList" :key="item.id">
-              <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.surname }}</td>
-              <td>{{ item.mobilephone }}</td>
-              <td>{{ item.ip }}</td>
-              <td>{{ item.mac }}</td>
-              <td class="iconColClass" data-html2canvas-ignore="true">
-                <em
-                  class="fa fa-edit fa-lg editIconClass"
-                  v-on:click="routeFunc('/addblog/' + item.id)"
-                ></em>
-              </td>
-              <td class="iconColClass" data-html2canvas-ignore="true">
-                <em
-                  class="fa fa-minus-circle fa-lg deleteIconClass"
-                  v-on:click="deleteConsumer(item.id)"
-                ></em>
-              </td>
-            </tr>
-          </tbody>
+        <br/>
+
+        <p class="tabText" v-on:click="switchTables('first')">First Table</p> |  
+        <p class="tabText" v-on:click="switchTables('second')">Second Table</p>
+        <hr/>
+        <table v-if="firstTableShowing" class="table table-striped table-bordered clientTableClass" id="pdfScreen">
+            <thead>
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
+                  <th scope="col">MobilePhone</th>
+                  <th scope="col">IP</th>
+                  <th scope="col">MAC</th>
+                  <th scope="col" colSpan="2" data-html2canvas-ignore="true" class="iconColClass"><i class="fa fa-plus-circle fa-2x addIconClass" v-on:click="routeFunc('/addblog')"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in consumerList" :key="item.id">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.surname }}</td>
+                <td>{{ item.mobilephone }}</td>
+                <td>{{ item.ip }}</td>
+                <td>{{ item.mac }}</td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-edit fa-lg editIconClass" v-on:click="routeFunc('/addblog/' + item.id)"></i></td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-minus-circle fa-lg deleteIconClass" v-on:click="deleteConsumer(item.id)"></i></td>
+              </tr>
+            </tbody>
+        </table>
+        <table v-if="secondTableShowing" class="table table-striped table-bordered clientTableClass">
+            <thead>
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
+                  <th scope="col" colSpan="2" data-html2canvas-ignore="true" class="iconColClass"><i class="fa fa-plus-circle fa-2x addIconClass"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>22</td>
+                <td>Metin</td>
+                <td>Kahraman</td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-edit fa-lg editIconClass"></i></td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-minus-circle fa-lg deleteIconClass"></i></td>
+              </tr>              
+              <tr>
+                <td>23</td>
+                <td>Selim</td>
+                <td>Güneş</td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-edit fa-lg editIconClass"></i></td>
+                <td class="iconColClass" data-html2canvas-ignore="true"><i class="fa fa-minus-circle fa-lg deleteIconClass"></i></td>
+              </tr>
+            </tbody>
         </table>
       </div>
     </div>
+    <br/>
+    <div class="card" v-if="firstTableShowing">
+      <div class="card-body" style="padding-bottom: 0;">
+        <div v-if="pageCount < 7" class="pagingArea">
+          <p class="pagingNumbers" v-on:click="goPreviousPage()"><</p>
+          <p class="pagingNumbers" v-on:click="goSelectedPage(index)" v-for="index in pageCount" :key="index">{{ index }}</p>
+          <p class="pagingNumbers" v-on:click="goNextPage()">></p>
+        </div>
+        <div v-if="pageCount >= 7" class="pagingArea">
+          <p class="pagingNumbers" v-on:click="goPreviousPage()"><</p>
+          <p class="pagingNumbers" v-on:click="goSelectedPage(1)">1</p>
+          <p class="pagingNumbers" v-on:click="goSelectedPage(2)">2</p>
+          <p class="pagingNumbers">...</p>
+          <p class="pagingNumbers" v-on:click="goSelectedPage(pageCount - 1)">{{ pageCount - 1 }}</p>
+          <p class="pagingNumbers" v-on:click="goSelectedPage(pageCount)">{{ pageCount }}</p>
+          <p class="pagingNumbers" v-on:click="goNextPage()">></p>
+        </div>
+        <div class="form-group inputClass">
+          <input type="text" v-model="selectedPage" v-on:keyup="goEnteredPage($event)" class="form-control " placeholder="Ex: 3">
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
   </div>
 </template>
 
@@ -70,10 +113,17 @@ import { Delete } from "../../services/apicall";
 export default {
   name: "blog-dahboard",
   data() {
-    return {
-      consumerList: [],
-      copyConsumerList: []
-    };
+      return {
+        consumerList: [],
+        copyConsumerList: [],
+        pageNum: 1,
+        pageDataCount: 2,
+        pageCount: 0,
+        selectedPage: "",
+        firstTableShowing: true,
+        secondTableShowing: false
+
+      };
   },
   components: {
     PageHeader
@@ -104,27 +154,29 @@ export default {
       doc.save("sample-file.pdf");
     },
 
-    getConsumers() {
-      let headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("accesstoken")
-      };
-      GetAll("http://localhost:5000/api/User/GetAll", headers).then(
-        response => {
-          if (typeof response == "number") {
-            if (response == 401) {
-              // route to login
-            } else if (response == 403) {
-              // do something
-            }
-          } else {
-            debugger;
-            this.consumerList = response.slice();
-            this.copyConsumerList = response.slice();
+    getConsumers: function (){
+      let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
+      GetAll("http://localhost:5000/api/User/GetAll", headers).then(response => {
+        if(typeof response == "number")
+        {
+          if(response == 401)
+          {
+            // route to login
+          }
+          else if(response == 403)
+          {
+            // do something
           }
         }
-      );
+        else
+        {
+          debugger;
+          this.copyConsumerList = response.slice();
+          this.consumerList = response.slice(0, 2);
+          this.pageCount = Math.ceil(this.copyConsumerList.length / 2); // ceil yukarıya yuvarlar
+        }
+      });
+
     },
 
     searchConsumers(event) {
@@ -183,7 +235,69 @@ export default {
       this.$router.push(path).catch(e => {});
     },
 
-    deleteConsumer(id) {
+    goNextPage: function () {
+      if(this.pageNum < this.pageCount)
+      {
+        this.consumerList = [];
+        this.consumerList = this.copyConsumerList.slice(this.pageNum * this.pageDataCount, (this.pageNum + 1) * this.pageDataCount);
+        this.pageNum++;
+      }
+      else
+      {
+        alert("Oops!! Last Page..");
+      }
+    },
+
+    goPreviousPage: function () {
+      if(this.pageNum >= 1)
+      {
+        this.consumerList = [];
+        this.consumerList = this.copyConsumerList.slice((this.pageNum - 1) * this.pageDataCount, this.pageNum * this.pageDataCount);
+        this.pageNum--;
+      }
+      else
+      {
+        alert("Oops!! Last Page..");
+      }
+    },
+
+    goSelectedPage(val)
+    {
+      this.consumerList = [];
+      this.consumerList = this.copyConsumerList.slice((val - 1) * this.pageDataCount, (val) * this.pageDataCount);
+      this.pageNum = val;
+    },
+
+    goEnteredPage(event)
+    {
+      debugger;
+      if(Number(event.target.value) < 1 || Number(event.target.value) > this.pageCount)
+      {
+        alert("Index is out of range!!");
+      }
+      else
+      {
+        this.consumerList = [];
+        this.consumerList = this.copyConsumerList.slice((Number(event.target.value) - 1) * this.pageDataCount, (Number(event.target.value)) * this.pageDataCount);
+        this.pageNum = Number(event.target.value);
+      }
+    },
+
+    switchTables(val)
+    {
+      if(val == "first")
+      {
+        this.firstTableShowing = true;
+        this.secondTableShowing = false;
+      }
+      else if(val == "second")
+      {
+        this.firstTableShowing = false;
+        this.secondTableShowing = true;
+      }
+    },
+
+    deleteConsumer(id){
       debugger;
       let headers = {
         Accept: "application/json",
