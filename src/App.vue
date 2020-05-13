@@ -5,15 +5,18 @@
 </template>
 
 <script>
-import DefaultLayout from "@/layouts/DefaultLayout";
+import DefaultLayout from "./layouts/DefaultLayout";
+import { USER_REQUEST } from "actions/user";
 
 export default {
   name: "App",
   components: {
     DefaultLayout
   },
-  data: {
-    
+  created: function() {
+    if (this.$store.getters.isAuthenticated) {
+      this.$store.dispatch(USER_REQUEST);
+    }
   }
 };
 </script>
