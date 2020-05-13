@@ -1,5 +1,3 @@
-import { refreshToken } from '../services/refreshtoken';
-
 export async function GetAll (url, headers) {
 
     let _data = {
@@ -17,51 +15,25 @@ export async function GetAll (url, headers) {
         }
         else
         {
-            return refreshToken().then(response => {
-                //debugger;
-                headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-                return GetAll(url, headers);
-             });
+            return 402;
         }
     }
-  } else if (response.status == 403) {
-    return response.status;
-  } else if (response.status == 200) {
-    return response.json();
-  }
-}
-
-export async function GetWithID(url, id, headers) {
-  let _data = {
-    method: "GET",
-    headers: headers
-  };
-
-  debugger;
-  let response = await fetch(url + id, _data);
-  debugger;
-
-  if (response.status == 401) {
-    if (localStorage.getItem("accesstoken") === null) {
-      return response.status;
-    } else {
-      return 402; // yine bir authorization kodu componentte ayırt edileilsin diye
+    else if(response.status == 403)
+    {
+        return response.status;
     }
-  } else if (response.status == 403) {
-    return response.status;
-  } else if (response.status == 200) {
-    return response.json();
-  }
+    else if(response.status == 200)
+    {
+        return response.json();
+    }
 }
 
-export async function Post(url, item, headers) {
-  let _data = {
-    method: "POST",
-    body: JSON.stringify(item),
-    headers: headers
-  };
+export async function GetWithID (url, id, headers) {
 
-  let response = await fetch(url, _data);
+    let _data = {
+        method: 'GET',
+        headers: headers
+    } 
 
     debugger;
     let response = await fetch(url + id, _data);
@@ -75,12 +47,7 @@ export async function Post(url, item, headers) {
         }
         else
         {
-            // return koymassak direk blogpost'a gider hepsindede
-            return refreshToken().then(response => {
-               //debugger;
-               headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-               return GetWithID(url, id, headers)
-            });
+            return 402; // yine bir authorization kodu componentte ayırt edileilsin diye
         }
     }
     else if(response.status == 403)
@@ -91,15 +58,9 @@ export async function Post(url, item, headers) {
     {
         return response.json();
     }
-
 }
 
-export async function Put(url, item, headers) {
-  let _data = {
-    method: "PUT",
-    body: JSON.stringify(item),
-    headers: headers
-  };
+export async function Post (url, item, headers) {
 
     let _data = {
         method: 'POST',
@@ -117,11 +78,7 @@ export async function Put(url, item, headers) {
         }
         else
         {
-            return refreshToken().then(response => {
-                //debugger;
-                headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-                return Post(url, item, headers);
-             });
+            return 402;
         }
     }
     else
@@ -147,20 +104,13 @@ export async function Put (url, item, headers) {
         }
         else
         {
-            return refreshToken().then(response => {
-                //debugger;
-                headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-                return Put(url, item, headers);
-            });
+            return 402;
         }
     }
     else
     {
         return response.status;
     }
-  } else {
-    return response.status;
-  }
 }
 
 export async function Delete (url, id, headers) {
@@ -180,11 +130,7 @@ export async function Delete (url, id, headers) {
         }
         else
         {
-            return refreshToken().then(response => {
-                //debugger;
-                headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-                return Delete(url, id, headers);
-             });
+            return 402;
         }
     }
     else
@@ -192,3 +138,35 @@ export async function Delete (url, id, headers) {
         return response.status;
     }
 }
+
+export async function refreshToken()
+{
+    let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Ref_Tok': localStorage.getItem("refreshtoken"), 'Acc_Tok': localStorage.getItem("accesstoken")};
+    debugger;
+    let _data = {
+        method: 'POST',
+        headers: headers
+        }
+    
+   let response = await fetch("http://localhost:5000/api/Token/RefreshTokens/", _data);
+   debugger;
+
+   if(response.status == 200)
+   {
+       return response.json();
+   }
+
+}
+
+/*export function PostWithModel (url, item, headers) {
+    // response de model döönen servisler mesela login access token ve refersh token dönüyor
+    debugger // eslint-disable-line
+
+    let _data = {
+        method: 'POST',
+        body: JSON.stringify(item),
+        headers: headers
+    } 
+    
+    return fetch(url, _data);
+}*/
