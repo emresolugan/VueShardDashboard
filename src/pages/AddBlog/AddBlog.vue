@@ -81,5 +81,5 @@ export default {
 </script>
 
 <style>
- @import "AddBlog.css";
+ @import "../../assets/styles/css/AddBlog.css";
 </style>
