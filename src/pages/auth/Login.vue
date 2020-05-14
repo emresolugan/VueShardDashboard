@@ -7,7 +7,7 @@
           <input
             type="email"
             v-model="username"
-            class="form-control inputClass"
+            class="form-control"
             placeholder="Enter your username"
             aria-describedby="emailHelp"
           />
@@ -16,7 +16,7 @@
           <input
             type="password"
             v-model="password"
-            class="form-control inputClass"
+            class="form-control"
             placeholder="Enter your password"
           />
         </div>
