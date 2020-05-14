@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import MainSideBar from "@/components/main/SideBar";
-import MainNavyBar from "@/components/main/MainNavyBar";
-import PageFooter from "@/components/main/PageFooter";
+import MainSideBar from "../components/main/SideBar";
+import MainNavyBar from "../components/main/MainNavyBar";
+import PageFooter from "../components/main/PageFooter";
 
 
 export default {

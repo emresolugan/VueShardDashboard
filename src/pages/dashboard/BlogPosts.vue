@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PageHeader from "@/components/main/PageHeader";
+import PageHeader from "../../components/main/PageHeader";
 import { GetWithID } from '../../services/apicall';
 import { Post } from '../../services/apicall';
 import { refreshToken } from '../../services/apicall';
