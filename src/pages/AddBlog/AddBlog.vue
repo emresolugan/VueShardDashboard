@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import { Post } from '../../services/apicall';
-import { GetWithID } from '../../services/apicall';
-import { Put } from '../../services/apicall';
+import { AxiosPost } from '../../services/axios';
+import { AxiosGetWithId } from '../../services/axios';
+import { AxiosPut } from '../../services/axios';
 
 export default {
   name: "add-blog",
@@ -46,29 +46,70 @@ export default {
             let consumer = {  id: 0 , name: this.consumer.name, surname: this.consumer.surname, mobilephone: this.consumer.mobilephone, ip: this.consumer.ip, mac: this.consumer.mac };
             let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
 
-            Post("http://localhost:5000/api/User", consumer, headers)
-                .then(response => {
-                    debugger;
-                    if(response == 200)
-                        this.consumer = { id: 0 , name: "", surname: "", mobilephone: "", ip: "", mac: ""};
-                }).catch((error) => console.error(error)) 
+            AxiosPost("http://localhost:5000/api/User", consumer, headers)
+            .then(response => {
+                // buraya giriyorsa her türlü 200 dönmüştür
+                this.consumer = { id: 0 , name: "", surname: "", mobilephone: "", ip: "", mac: ""};
+            })
+            .catch(error => {
+                if(error.response.status == 401)
+                {
+                    // route to login
+                }
+                else if(error.response.status == 403)
+                {
+                    // yetki yok birşeyler yap
+                }
+                else
+                {
+                    // genel errorlar için birşeyler yapılabilir
+                }
+            })
           }  
           else
           {
             let consumer = {  id: this.consumer.id , name: this.consumer.name, surname: this.consumer.surname, mobilephone: this.consumer.mobilephone, ip: this.consumer.ip, mac: this.consumer.mac };
             let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
 
-            Put("http://localhost:5000/api/User", consumer, headers)
-                .then(response => {
-                }).catch((error) => console.error(error)) 
+            AxiosPut("http://localhost:5000/api/User", consumer, headers)
+            .then(response => {
+            })
+            .catch(error => {
+                if(error.response.status == 401)
+                {
+                    // route to login
+                }
+                else if(error.response.status == 403)
+                {
+                    // yetki yok birşeyler yap
+                }
+                else
+                {
+                    // genel errorlar için birşeyler yapılabilir
+                }
+            })
           }      
       },
       getConsumerData(id) {
           let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
-          GetWithID("http://localhost:5000/api/User/GetSelectedConsumer/", id, headers).then(response => {
-            debugger // eslint-disable-line
-            this.consumer = { id: response[0].id, name: response[0].name, surname: response[0].surname, mobilephone: response[0].mobilephone, ip: response[0].ip, mac: response[0].mac };
-          }).catch((error) => console.error(error));       
+          AxiosGetWithId("http://localhost:5000/api/User/GetSelectedConsumer/", id, headers)
+          .then(response => {
+            this.consumer = { id: response.data[0].id, name: response.data[0].name, surname: response.data[0].surname, mobilephone: response.data[0].mobilephone, ip: response.data[0].ip, mac: response.data[0].mac };
+          }).catch(error => 
+          {
+            if(error.response.status == 401)
+            {
+                // route to login
+            }
+            else if(error.response.status == 403)
+            {
+                // yetki yok birşeyler yap
+            }
+            else
+            {
+                // genel errorlar için birşeyler yapılabilir
+            }
+          })          
       }
   },
   created: function (){

@@ -4,10 +4,10 @@
       <p class="loginHeader">Login</p>
       <div class="inputGroup">
         <div class="form-group">
-          <input type="email" v-model="username" class="form-control inputClass" placeholder="Enter your username" aria-describedby="emailHelp">
+          <input type="email" v-model="username" class="form-control" placeholder="Enter your username" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
-          <input type="password"  v-model="password" class="form-control inputClass" placeholder="Enter your password">
+          <input type="password"  v-model="password" class="form-control" placeholder="Enter your password">
         </div>
         <button type="submit" class="btn btn-primary btnClass" v-on:click="login()">Login</button>
       </div>
@@ -37,6 +37,7 @@ export default {
         body: JSON.stringify({ Username: this.username, Password: this.password }),
         headers: headers
       } 
+      debugger;
       fetch("http://localhost:5000/api/Login", _data)
       .then(response => response.json())
       .then(response => {
