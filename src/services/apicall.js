@@ -23,45 +23,15 @@ export async function GetAll (url, headers) {
                 return GetAll(url, headers);
              });
         }
-    }
-  } else if (response.status == 403) {
-    return response.status;
-  } else if (response.status == 200) {
-    return response.json();
-  }
+    } else if (response.status == 403) {return response.status;} else if (response.status == 200) {return response.json(); }
 }
 
-export async function GetWithID(url, id, headers) {
-  let _data = {
-    method: "GET",
-    headers: headers
-  };
+export async function GetWithID (url, id, headers) {
 
-  debugger;
-  let response = await fetch(url + id, _data);
-  debugger;
-
-  if (response.status == 401) {
-    if (localStorage.getItem("accesstoken") === null) {
-      return response.status;
-    } else {
-      return 402; // yine bir authorization kodu componentte ayırt edileilsin diye
-    }
-  } else if (response.status == 403) {
-    return response.status;
-  } else if (response.status == 200) {
-    return response.json();
-  }
-}
-
-export async function Post(url, item, headers) {
-  let _data = {
-    method: "POST",
-    body: JSON.stringify(item),
-    headers: headers
-  };
-
-  let response = await fetch(url, _data);
+    let _data = {
+        method: 'GET',
+        headers: headers
+    } 
 
     debugger;
     let response = await fetch(url + id, _data);
@@ -94,12 +64,7 @@ export async function Post(url, item, headers) {
 
 }
 
-export async function Put(url, item, headers) {
-  let _data = {
-    method: "PUT",
-    body: JSON.stringify(item),
-    headers: headers
-  };
+export async function Post (url, item, headers) {
 
     let _data = {
         method: 'POST',
@@ -158,9 +123,6 @@ export async function Put (url, item, headers) {
     {
         return response.status;
     }
-  } else {
-    return response.status;
-  }
 }
 
 export async function Delete (url, id, headers) {

@@ -1,21 +1,13 @@
 <template>
-  <div class="hello">
+  <!--<PageHeader :title="this.title" :subTitle="this.subTitle"></PageHeader>-->
+
+   <div class="hello">
     <div class="card tableDiv">
       <div class="card-body cardBodyClass">
-        <button
-          type="button"
-          class="btn btn-primary createpdfBtn"
-          v-on:click="createPDF()"
-        >Create PDF</button>
+        <button type="button" class="btn btn-primary createpdfBtn" v-on:click="createPDF()">Create PDF</button>
         <button type="button" class="btn btn-primary pdfBtn" v-on:click="exportPDF()">Export PDF</button>
         <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control searchBarClass"
-            v-on:keyup="searchConsumers($event)"
-            placeholder="Search Bar"
-            aria-label="SearchBar"
-          />
+            <input type="text" class="form-control searchBarClass" v-on:keyup="searchConsumers($event)" placeholder="Search Bar" aria-label="SearchBar"/>
         </div>
         <br/>
 
@@ -100,15 +92,16 @@
     <br/>
     <br/>
   </div>
+  
 </template>
 
 <script>
-import PageHeader from "../../components/main/PageHeader";
-import jspdf from "jspdf";
-import "jspdf-autotable";
-import html2canvas from "html2canvas";
-import { GetAll } from "../../services/apicall";
-import { Delete } from "../../services/apicall";
+import PageHeader from "@/components/main/PageHeader";
+import jspdf from 'jspdf' 
+import 'jspdf-autotable'
+import html2canvas from "html2canvas"
+import { GetAll } from '../../services/apicall';
+import { Delete } from '../../services/apicall';
 
 export default {
   name: "blog-dahboard",
@@ -129,29 +122,31 @@ export default {
     PageHeader
   },
   methods: {
-    exportPDF: function() {
-      var data = document.getElementById("pdfScreen");
-      html2canvas(data).then(canvas => {
-        const contentDataURL = canvas.toDataURL("image/png");
-        const pdf = new jspdf("p", "pt", "a4");
-        const imgProps = pdf.getImageProperties(contentDataURL);
+    exportPDF: function () {
+      var data = document.getElementById('pdfScreen');  
+      html2canvas(data).then(canvas => { 
+    
+        const contentDataURL = canvas.toDataURL('image/png')  
+        const pdf = new jspdf('p','pt', 'a4'); 
+        const imgProps= pdf.getImageProperties(contentDataURL);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        pdf.text("Hello World", 260, 20);
-        var position = 50;
-        pdf.addImage(contentDataURL, "PNG", 0, position, pdfWidth, pdfHeight);
-        pdf.text("Hello World", 260, 290);
-        pdf.save("table.pdf"); // Generated PDF
-      });
+        pdf.text("Hello World", 260, 20)
+        var position = 50;  
+        pdf.addImage(contentDataURL, 'PNG', 0, position, pdfWidth, pdfHeight)
+        pdf.text("Hello World", 260, 290)
+        pdf.save('table.pdf'); // Generated PDF   
+      }); 
     },
 
-    createPDF: function() {
-      var doc = new jspdf("p", "pt", "a4");
+    createPDF: function () {
+      var doc = new jspdf('p','pt', 'a4');
 
-      doc.text("Hello World", 260, 20);
-      doc.autoTable({ html: "#pdfScreen" });
+      doc.text("Hello World", 260, 20)
+      doc.autoTable({ html: '#pdfScreen' })
 
-      doc.save("sample-file.pdf");
+      doc.save('sample-file.pdf');
+    
     },
 
     getConsumers: function (){
@@ -179,58 +174,49 @@ export default {
 
     },
 
-    searchConsumers(event) {
-      debugger; // eslint-disable-line
-      if (event.target.value == "") {
+    searchConsumers(event)
+    {
+      debugger // eslint-disable-line
+      if(event.target.value == "")
+      {
         this.consumerList = [];
         this.consumerList = this.copyConsumerList.slice();
-      } else {
+      }
+      else
+      {
         this.consumerList = [];
 
-        for (let i in this.copyConsumerList) {
-          if (
-            this.copyConsumerList[i].id
-              .toString()
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+        for(let i in this.copyConsumerList)
+        {
+          if(this.copyConsumerList[i].id.toString().toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
-          } else if (
-            this.copyConsumerList[i].name
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+          }
+          else if(this.copyConsumerList[i].name.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
-          } else if (
-            this.copyConsumerList[i].surname
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+          }
+          else if(this.copyConsumerList[i].surname.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
-          } else if (
-            this.copyConsumerList[i].mobilephone
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+          }
+          else if(this.copyConsumerList[i].mobilephone.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
-          } else if (
-            this.copyConsumerList[i].ip
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+          }
+          else if(this.copyConsumerList[i].ip.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
-          } else if (
-            this.copyConsumerList[i].mac
-              .toLocaleLowerCase()
-              .includes(event.target.value.toLocaleLowerCase())
-          ) {
+          }
+          else if(this.copyConsumerList[i].mac.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase()))
+          {
             this.consumerList.push(this.copyConsumerList[i]);
           }
         }
       }
     },
 
-    routeFunc: function(path) {
+    routeFunc: function (path) {
       // catch unhandled promise hatası için
       this.$router.push(path).catch(e => {});
     },
@@ -299,28 +285,21 @@ export default {
 
     deleteConsumer(id){
       debugger;
-      let headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("accesstoken")
-      };
+      let headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
       Delete("http://localhost:5000/api/User/", id, headers)
-        .then(response => {
-          if (response == 200)
-            this.consumerList.splice(
-              this.consumerList.findIndex(x => x.id == id),
-              1
-            );
-        })
-        .catch(error => console.error(error));
+      .then(response => {
+        if(response == 200)
+         this.consumerList.splice(this.consumerList.findIndex(x => x.id == id), 1);
+      }).catch((error) => console.error(error))        
     }
+
   },
-  created: function() {
+  created: function (){
     this.getConsumers();
-  }
+  },
 };
 </script>
 
 <style>
-@import "../../assets/styles/css/BlogDashboard.css";
+ @import "BlogDashboard.css";
 </style>
