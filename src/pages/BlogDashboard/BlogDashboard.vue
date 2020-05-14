@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import PageHeader from "@/components/main/PageHeader";
+import PageHeader from "../../components/main/PageHeader";
 import jspdf from 'jspdf' 
 import 'jspdf-autotable'
 import html2canvas from "html2canvas"

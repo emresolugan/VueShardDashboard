@@ -76,7 +76,7 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img class="user-avatar rounded-circle mr-2" src="@/assets/images/avatars/0.jpg" alt="User Avatar" />
+          <img class="user-avatar rounded-circle mr-2" src="../../assets/images/avatars/0.jpg" alt="User Avatar" />
           <span class="d-none d-md-inline-block">Sierra Brooks</span>
         </a>
         <div class="dropdown-menu dropdown-menu-small">

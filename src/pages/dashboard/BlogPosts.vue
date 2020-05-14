@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PageHeader from "@/components/main/PageHeader";
+import PageHeader from "../../components/main/PageHeader";
 import { GetWithID } from '../../services/apicall';
 import { AxiosGetWithId } from '../../services/axios';
 export default {

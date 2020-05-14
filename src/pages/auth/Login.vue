@@ -30,7 +30,7 @@ export default {
 
   methods: {
     login: function () {
- 
+ debugger
       let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
       let _data = {
         method: 'POST',
