@@ -1,10 +1,10 @@
-import BlogDashboard from '@/pages/BlogDashboard/BlogDashboard'
-import BlogPosts from '@/pages/dashboard/BlogPosts'
-import AddBlog from '@/pages/AddBlog/AddBlog'
-import Login from '@/pages/auth/Login'
-import Register from '@/pages/auth/Register'
-import Error_404 from '@/pages/errors/404'
-import Error_500 from '@/pages/errors/500'
+import BlogDashboard from '../pages/BlogDashboard/BlogDashboard'
+import BlogPosts from '../pages/dashboard/BlogPosts'
+import AddBlog from '../pages/AddBlog/AddBlog'
+import Login from '../pages/auth/Login'
+import Register from '../pages/auth/Register'
+import Error_404 from '../pages/errors/404'
+import Error_500 from '../pages/errors/500'
 
 const routes = [
     {
