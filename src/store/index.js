@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import tokenModule from './modules/tokenmodule'
+import user from "./modules/user";
+import auth from "./modules/auth";
+Vue.use(Vuex);
 
-Vue.use(Vuex)
+const debug = process.env.NODE_ENV !== "production";
 
 export default new Vuex.Store({
   modules: {
-    tokenModule
-  }
-})
+    user,
+    auth
+  },
+  strict: debug
+});
