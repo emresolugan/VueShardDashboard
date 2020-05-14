@@ -11,9 +11,6 @@ export default {
   name: "App",
   components: {
     DefaultLayout
-  },
-  data: {
-    
   }
 };
 </script>
