@@ -29,36 +29,70 @@ export async function GetAll(url, headers) {
   }
 }
 
-export async function GetWithID(url, id, headers) {
-  let _data = {
-    method: "GET",
-    headers: headers
-  };
+export async function GetWithID (url, id, headers) {
 
-  debugger;
-  let response = await fetch(url + id, _data);
-  debugger;
+    let _data = {
+        method: 'GET',
+        headers: headers
+    } 
 
-  if (response.status == 401) {
-    if (localStorage.getItem("accesstoken") === null) {
-      return response.status;
-    } else {
-      // return koymassak direk blogpost'a gider hepsindede
-      return refreshToken().then(response => {
-        //debugger;
-        headers = {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("accesstoken")
-        };
-        return GetWithID(url, id, headers);
-      });
+    let response = await fetch(url + id, _data);
+    debugger;
+    if(response.status == 401)
+    {
+        if(localStorage.getItem("accesstoken") === null)
+        {
+            return response.status;
+        }
+        else
+        {
+            // return olmadan gene pas geçiyo
+            return new Promise((resolve, reject) => {
+                resolve(refreshToken().then(rresp => {
+                    headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
+                    return GetWithID(url, id, headers);       
+                }))
+            })
+        }
     }
-  } else if (response.status == 403) {
-    return response.status;
-  } else if (response.status == 200) {
-    return response.json();
-  }
+    else if(response.status == 403)
+    {
+        return response.status
+    }
+    else if(response.status == 200)
+    {
+        return response.json();
+    }
+
+  /*  debugger;
+    let response = await fetch(url + id, _data);
+    debugger;
+
+    if(response.status == 401)
+    {
+        if(localStorage.getItem("accesstoken") === null)
+        {
+            return response.status;
+        }
+        else
+        {
+            // return koymassak direk componente gider hepsindede
+            return refreshToken().then(response => {
+               //debugger;
+               headers = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("accesstoken")};
+               return GetWithID(url, id, headers)
+            });
+        }
+    }
+    else if(response.status == 403)
+    {
+        return response.status
+    }
+    else if(response.status == 200)
+    {
+        return response.json();
+    }
+ */
 }
 
 export async function GetWithUsername(url, username, headers) {

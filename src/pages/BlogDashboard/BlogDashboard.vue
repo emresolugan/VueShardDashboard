@@ -223,8 +223,8 @@ export default {
           } else {
             debugger;
             this.copyConsumerList = response.slice();
-            this.consumerList = response.slice(0, 2);
-            this.pageCount = Math.ceil(this.copyConsumerList.length / 2); // ceil yukarıya yuvarlar
+            this.consumerList = response.slice(0, this.pageDataCount);
+            this.pageCount = Math.ceil(this.copyConsumerList.length / this.pageDataCount); // ceil yukarıya yuvarlar
           }
         }
       );
