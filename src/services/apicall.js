@@ -61,6 +61,38 @@ export async function GetWithID(url, id, headers) {
   }
 }
 
+export async function GetWithUsername(url, username, headers) {
+  let _data = {
+    method: "GET",
+    headers: headers
+  };
+
+  debugger;
+  await fetch(url + username, _data).then(response => {
+    if (response.status == 401) {
+      if (localStorage.getItem("accesstoken") === null) {
+        return response.status;
+      } else {
+        // return koymassak direk blogpost'a gider hepsindede
+        return refreshToken().then(response => {
+          //debugger;
+          headers = {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("accesstoken")
+          };
+          return GetWithUsername(url, username, headers);
+        });
+      }
+    } else if (response.status == 403) {
+      return response.status;
+    } else if (response.status == 200) {
+      return response.json();
+    }
+  });
+  debugger;
+}
+
 export async function Post(url, item, headers) {
   let _data = {
     method: "POST",

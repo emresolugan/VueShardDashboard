@@ -4,7 +4,7 @@
       <div class="input-group input-group-seamless ml-3">
         <div class="input-group-prepend">
           <div class="input-group-text">
-            <i class="fas fa-search"></i>
+            <em class="fas fa-search"></em>
           </div>
         </div>
         <input
@@ -27,7 +27,7 @@
           aria-expanded="false"
         >
           <div class="nav-link-icon__wrapper">
-            <i class="material-icons">&#xE7F4;</i>
+            <em class="material-icons">&#xE7F4;</em>
             <span class="badge badge-pill badge-danger">2</span>
           </div>
         </a>
@@ -35,7 +35,7 @@
           <a class="dropdown-item" href="#">
             <div class="notification__icon-wrapper">
               <div class="notification__icon">
-                <i class="material-icons">&#xE6E1;</i>
+                <em class="material-icons">&#xE6E1;</em>
               </div>
             </div>
             <div class="notification__content">
@@ -51,7 +51,7 @@
           <a class="dropdown-item" href="#">
             <div class="notification__icon-wrapper">
               <div class="notification__icon">
-                <i class="material-icons">&#xE8D1;</i>
+                <em class="material-icons">&#xE8D1;</em>
               </div>
             </div>
             <div class="notification__content">
@@ -76,27 +76,33 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img class="user-avatar rounded-circle mr-2" src="../../assets/images/avatars/0.jpg" alt="User Avatar" />
-          <span class="d-none d-md-inline-block">Sierra Brooks</span>
+          <img
+            class="user-avatar rounded-circle mr-2"
+            src="../../assets/images/avatars/0.jpg"
+            alt="User Avatar"
+          />
+          <span v-if="isProfileLoaded" class="d-none d-md-inline-block">{{ name }}</span>
+          <span v-else class="d-none d-md-inline-block">Anonim</span>
         </a>
         <div class="dropdown-menu dropdown-menu-small">
           <a class="dropdown-item" href="user-profile-lite.html">
-            <i class="material-icons">&#xE7FD;</i> Profile
+            <em class="material-icons">&#xE7FD;</em> Profile
           </a>
           <a class="dropdown-item" href="components-blog-posts.html">
-            <i class="material-icons">vertical_split</i> Blog Posts
-          </a>
-          <a class="dropdown-item" href="add-new-post.html">
-            <i class="material-icons">note_add</i> Add New Post
+            <em class="material-icons">vertical_split</em> Blog Posts
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger" href="#">
-            <i class="material-icons text-danger">&#xE879;</i> Logout
+          <a class="dropdown-item" v-if="!isAuthenticated && !authLoading" href="/login">
+            <em class="material-icons">&#xE7FD;</em> Login
+          </a>
+          
+          <a class="dropdown-item text-danger" v-if="isAuthenticated" @click="logout">
+            <em class="material-icons text-danger">&#xE879;</em> Logout
           </a>
         </div>
       </li>
     </ul>
-    <nav class="nav">
+    <nav class="nav" aria-label="Site navigation">
       <a
         href="#"
         class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left"
@@ -105,8 +111,28 @@
         aria-expanded="false"
         aria-controls="header-navbar"
       >
-        <i class="material-icons">&#xE5D2;</i>
+        <em class="material-icons">&#xE5D2;</em>
       </a>
     </nav>
   </nav>
 </template>
+
+<script>
+import { mapGetters, mapState } from "vuex";
+
+export default {
+  name: "navigation",
+  methods: {
+    logout: function() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push("/login"));
+    }
+  },
+  computed: {
+    ...mapGetters(["getProfile", "isAuthenticated", "isProfileLoaded"]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      name: state => `${state.user.profile.name} ${state.user.profile.surname}`
+    })
+  }
+};
+</script>

@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { AUTH_REQUEST } from "../../store/actions/auth";
+
 export default {
   name: "LoginScreen",
 
@@ -41,37 +43,10 @@ export default {
     login: function() {
       debugger;
 
-      let headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      };
-      let _data = {
-        method: "POST",
-        body: JSON.stringify({
-          Username: this.username,
-          Password: this.password
-        }),
-        headers: headers
-      };
-      fetch("http://localhost:5000/api/Login", _data)
-        .then(response => response.json())
-        .then(response => {
-          debugger; // eslint-disable-line
-          console.log(response);
-
-          const { username, password } = this;
-          this.$store
-            .dispatch(AUTH_REQUEST, { username, password })
-            .then(() => {
-              this.$router.push("/");
-            });
-
-          localStorage.setItem("accesstoken", response.accessToken);
-          localStorage.setItem("refreshtoken", response.refreshToken);
-          this.$store.dispatch("tokenModule/setToken", response.accessToken);
-          console.log(this.$store);
-        })
-        .catch(error => console.error(error));
+      const { username, password } = this;
+      this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+        this.$router.push("/")
+      });
     }
   }
 };

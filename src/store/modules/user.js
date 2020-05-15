@@ -1,7 +1,7 @@
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS } from "../actions/user";
-import apiCall from "../../utils/api";
 import Vue from "vue";
 import { AUTH_LOGOUT } from "../actions/auth";
+import { GetWithUsername } from "../../services/apicall";
 
 const state = { status: "", profile: {} };
 
@@ -11,17 +11,28 @@ const getters = {
 };
 
 const actions = {
-  [USER_REQUEST]: ({ commit, dispatch }) => {
+  [USER_REQUEST]: ({ commit, dispatch }, username) => {
     commit(USER_REQUEST);
-    apiCall({ url: "user/me" })
-      .then(resp => {
-        commit(USER_SUCCESS, resp);
-      })
-      .catch(() => {
-        commit(USER_ERROR);
-        // if resp is unauthorized, logout, to
-        dispatch(AUTH_LOGOUT);
-      });
+debugger;
+    let headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("accesstoken")
+    };
+    GetWithUsername(
+      "http://localhost:5000/api/User/",
+      username,
+      headers
+    )
+    .then(resp => {
+      debugger;
+      commit(USER_SUCCESS, resp);
+    })
+    .catch(() => {
+      commit(USER_ERROR);
+      // if resp is unauthorized, logout, to
+      dispatch(AUTH_LOGOUT);
+    });
   }
 };
 
