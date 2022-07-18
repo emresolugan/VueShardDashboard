@@ -13,7 +13,7 @@
     "es6-promise": "^4.2.8",
     "html2canvas": "^1.0.0-rc.5",
     "jquery": "^3.5.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.5.3",
     "vue": "^2.6.11",
